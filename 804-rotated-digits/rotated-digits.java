@@ -1,41 +1,33 @@
 class Solution {
     public boolean valid(int n) {
-        int temp = n;
-        int rotated = 0;
-        int place = 0;
+        boolean changed = false;
+
         while (n > 0) {
             int digit = n % 10;
 
-            if (digit == 4 || digit == 3 || digit == 7) {
+            if (digit == 3 || digit == 4 || digit == 7) {
                 return false;
             }
-            if (digit == 5) {
-                digit = 2;
-            } else if (digit == 2) {
-                digit = 5;
-            } else if (digit == 6) {
-                digit = 9;
-            } else if (digit == 9) {
-                digit = 6;
+
+            if (digit == 2 || digit == 5 || digit == 6 || digit == 9) {
+                changed = true;
             }
 
-            rotated += digit * Math.pow(10, place);
-            place++;
             n = n / 10;
         }
-        return rotated != temp;
+
+        return changed;
     }
 
     public int rotatedDigits(int n) {
-        System.out.print(valid(1));
-        int sum = 0;
-        for (int i = 1; i <= n; i++) {
+        int count = 0;
 
+        for (int i = 1; i <= n; i++) {
             if (valid(i)) {
-                sum += 1;
+                count++;
             }
         }
 
-        return sum;
+        return count;
     }
 }
