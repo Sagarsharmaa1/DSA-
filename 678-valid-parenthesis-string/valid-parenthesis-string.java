@@ -1,23 +1,20 @@
-import java.math.BigInteger;
-
 class Solution {
     public boolean checkValidString(String s) {
-        BigInteger mask = BigInteger.ONE;
-
-        for (int i = 0; i < s.length(); i++) {
-            char ch = s.charAt(i);
-
-            if (ch == '(') {
-                mask = mask.shiftLeft(1);
-            } else if (ch == ')') {
-                mask = mask.shiftRight(1);
+        int low = 0, high = 0;
+        for (char c : s.toCharArray()) {
+            if (c == '(') {
+                low++;
+                high++;
+            } else if (c == ')') {
+                low--;
+                high--;
             } else {
-                mask = mask.shiftLeft(1)
-                           .or(mask)
-                           .or(mask.shiftRight(1));
+                low--;
+                high++;
             }
+            if (high < 0) return false;
+            if (low < 0) low = 0;
         }
-
-        return mask.testBit(0);
+        return low == 0;
     }
 }
